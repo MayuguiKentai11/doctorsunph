@@ -1,0 +1,253 @@
+<!-- Loading overlay -->
+<div *ngIf="isLoading" class="overlay">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div class="table-wrapper">
+  <div class="header">
+    <h1 class="center">Prescripciones IQVIA</h1>
+    <img src="/ico_sanfurma.jpeg" alt="sunpharma_logo" [width]="100" [height]="75"/>
+  </div>
+
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="name" id="name" name="name" [required]="false" [formControl]="nameControl" formControlName="name" [matAutocomplete]="auto1" #name>
+      <mat-autocomplete #auto1="matAutocomplete">
+        <mat-option *ngFor="let name of filteredNames | async" [value]="name">
+          {{name}}
+        </mat-option>
+      </mat-autocomplete>
+<!--      <mat-error *ngIf="isInvalidControl(form, 'name')">
+        {{errorMessagesForControl(form, 'name')}}
+      </mat-error>-->
+
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>Surname</mat-label>
+      <input matInput type="text" id="surname" name="surname" [required]="false" [formControl]="surnameControl" formControlName="surname" #surname [matAutocomplete]="auto2">
+      <mat-autocomplete #auto2="matAutocomplete">
+        <mat-option *ngFor="let surname of filteredSurnames | async" [value]="surname">
+          {{surname}}
+        </mat-option>
+      </mat-autocomplete>
+<!--      <mat-error *ngIf="isInvalidControl(form, 'surname')">-->
+<!--        {{errorMessagesForControl(form, 'surname')}}-->
+<!--      </mat-error>-->
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>CMP</mat-label>
+      <input matInput type="name" id="cmp" name="cmp" [required]="false" formControlName="cmp" #cmp>
+<!--      <mat-error *ngIf="isInvalidControl(form, 'cmp')">-->
+<!--        {{errorMessagesForControl(form, 'cmp')}}-->
+<!--      </mat-error>-->
+    </mat-form-field>
+
+    <br>
+
+    <button type="submit" mat-raised-button color="primary">CONSULTAR</button>
+
+  </form>
+
+  <!-- Data Table -->
+
+  <div class="row-container">
+    <button class="button-refresh" (click)="onRefresh()">
+      <i class="fas fa-sync-alt"></i>
+    </button>
+  </div>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+    <!--<ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
+      <td *matCellDef="let element" mat-cell>{{ element.id }}</td>
+    </ng-container>-->
+
+    <ng-container matColumnDef="molecule">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Molecule</th>
+      <td *matCellDef="let element" mat-cell>{{ element.molecule }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="descriptionLaboratory">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Description Laboratory</th>
+      <td *matCellDef="let element" mat-cell>{{ element.descriptionLaboratory }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Department</th>
+      <td *matCellDef="let element" mat-cell>{{ element.department }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cmp">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>CMP</th>
+      <td *matCellDef="let element" mat-cell>{{ element.cmp }}</td>
+    </ng-container>
+
+    <!--<ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Medic's name</th>
+      <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Medic's surname</th>
+      <td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
+    </ng-container>-->
+
+    <ng-container matColumnDef="ytdSun23">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 23</th>
+      <td *matCellDef="let element" mat-cell>{{ element.ytdSun23 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ytdSun24">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 24</th>
+      <td *matCellDef="let element" mat-cell>{{ element.ytdSun24 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="qtrSetNov">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR SET-NOV</th>
+      <td *matCellDef="let element" mat-cell>{{ element.qtrSetNov }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="qtrDicFeb">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR DIC-FEB</th>
+      <td *matCellDef="let element" mat-cell>{{ element.qtrDicFeb }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="qtrMarMay">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR MAR-MAY</th>
+      <td *matCellDef="let element" mat-cell>{{ element.qtrMarMay }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="qtrJunAgo">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR JUN-AGO</th>
+      <td *matCellDef="let element" mat-cell>{{ element.qtrJunAgo }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Paginator child component-->
+  <mat-paginator [length]="25" [pageSizeOptions]="[5, 10, 15, 25]" [pageSize]="5" aria-label="Select Page" showFirstLastButtons></mat-paginator>
+</div>
+
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+  .overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000; /* Ensure the overlay is above other elements */
+  }
+
+  .header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .row-container {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center; /* Center vertically, optional */
+    margin-right: 20px;
+    padding: inherit;
+  }
+
+
+  .button-refresh {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+  }
+
+  .button-refresh:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+
+  .button-refresh:active {
+    background-color: #3e8e41; /* Even darker on active */
+  }
+
+  .button-refresh i {
+    margin-right: 5px; /* Space between icon and text */
+    font-size: 18px; /* Adjust icon size */
+  }
+
+
+  .center{
+    text-align: center;
+  }
+
+  h1{
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    font-size: 2.5em;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background: -webkit-linear-gradient(#0072ff, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: row; /* This will place all the form elements in a row */
+    align-items: center;
+    justify-content: space-between; /* This will space out the form elements evenly */
+    max-width: 100%;
+    padding: 20px;
+
+  }
+
+  mat-form-field {
+    flex: 1; /* This will make each form field take up an equal amount of space */
+    margin: 0 10px; /* This will add some margin to the left and right of each form field */
+  }
+
+  /* This media query will apply when the screen width is 600px or less */
+  @media (max-width: 600px) {
+    form {
+      flex-direction: column; /* This will place the form elements in a column */
+    }
+
+    mat-form-field {
+      margin: 10px 0; /* This will add some margin to the top and bottom of each form field */
+    }
+  }
+
+  .table-wrapper {
+    margin: 20px;
+    font-family: 'Nunito', sans-serif;
+    width: 100%;
+    max-width: 100%; /* This will limit the maximum width of the table to 100% of the screen width */
+  }
+
+</style>

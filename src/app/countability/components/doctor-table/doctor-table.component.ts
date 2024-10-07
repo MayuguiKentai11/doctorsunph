@@ -8,6 +8,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BaseFormComponent} from '../../../shared/components/base-form.component';
 import {map, Observable, of, startWith} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-doctor-table',
@@ -71,7 +72,7 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
 
   // Constructor
 
-  constructor(private doctorService : DoctorsApiService, private builder: FormBuilder, private toastr : ToastrService) {
+  constructor(private doctorService : DoctorsApiService, private builder: FormBuilder, private snackBar: MatSnackBar) {
     super();
     this.detailData = {} as DoctorDetail;
     new MatTableDataSource<any>();
@@ -121,8 +122,6 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
   onSubmit(){
     // if(this.form.invalid) return;
 
-    this.isLoading = true;
-
     let cmp = this.cmpInput.nativeElement.value;
 
     // let name = this.nameInput.nativeElement.value;
@@ -131,10 +130,14 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
 
     if(cmp == '' && surname == '')
     {
-      this.toastr.info('Please complete the fields', 'INFO');
+      this.snackBar.open('Please fill at least one field.', 'OK',{
+        duration: 2000
+      });
+
     }
     else if(cmp != '')
     {
+      this.isLoading = true;
       this.doctorService.getDoctorDetailsByCMP(cmp).subscribe((data : any)=>{
 
         this.dataSource = new MatTableDataSource<any>(data)
@@ -148,6 +151,7 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
     }
     else
     {
+      this.isLoading = true;
       this.doctorService.getDoctorDetailsBySurname(surname).subscribe((data: any)=>{
         this.dataSource = new MatTableDataSource<any>(data)
 

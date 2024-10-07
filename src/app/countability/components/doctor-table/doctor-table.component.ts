@@ -7,6 +7,7 @@ import {DoctorsApiService} from '../../services/doctors-api.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BaseFormComponent} from '../../../shared/components/base-form.component';
 import {map, Observable, of, startWith} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-doctor-table',
@@ -24,7 +25,7 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
 
   @ViewChild(MatSort, {static : false}) sort!: MatSort;
 
-  @ViewChild('name',{static : false}) nameInput! : ElementRef;
+  // @ViewChild('name',{static : false}) nameInput! : ElementRef;
 
   @ViewChild('surname', {static: false}) surnameInput! : ElementRef;
 
@@ -61,21 +62,20 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
 
   // Name Control
 
-  names : string[] = ["LUIS EMILIO", "CARLOS WILFREDO", "LUIS JOSE", "MARGARITA", "ARMANDO", "PEDRO VIRGILIO", "FANNY", "JAVIER", "JORGE ALBERTO", "EDSON MIGUEL", "MILAGROS ANGELA", "JUAN MANUEL", "ELDER", "ADOLFO ROMEO", "ORLANDO", "JAQUELINE GENOVEVA", "ALCIDES", "JOSE MERCEDES", "EDWIN MARTIN", "LIZARDO", "JAVIER ESTEBAN", "ZOILA ELIZABETH", "ERADIO", "ROGELIO", "JAVIER GONZALO", "LUIS DANIEL", "HEVER CARLO", "FERNANDO DIEGO", "CARLOS MANUEL", "IGNACIO", "LUIS ALFREDO", "JULIAN", "SHERON FROYLANA", "SIMEON IGNACIO", "WILLIAM", "HERNAN ALEXANDER", "CARLOS JESUS", "ROSA MARIA", "ANDRES", "LUIS SILVANO", "CARLOS ALBERTO", "RAY BILLY", "LUIS ALFREDO ALBERTO", "KRIS MAYKOL", "SILVIA LUZ", "CARLOS RAUL", "JOSE CARLOS", "FELIX", "LUIS ENRIQUE", "ALFREDO FEDERICO", "JULIAN NESTOR", "JULIO CESAR", "LIDA RAQUEL", "MARITA MILAGROS", "MARIA DEL PILAR ELLA", "LIZANDRO", "JOHN JAVIER", "JAVIER ALEXANDER", "ALFONSO DANIEL", "LUZ ALEXI", "YURI LICINIO", "NANCY LINETH", "STEPHANIE VANESSA", "CHRISTHIAN", "EDWIN", "ALBERTO GENARO", "OSCAR SERGIO", "HUMBERTO", "GUISELA MARIA", "ANTHONY AQUILES", "JUAN", "MARCY KARIM", "BALTAZAR ELMER", "JORGE ENRIQUE", "LUIS ALBERTO", "GIANFRANCO CESAR ABEL", "JUANA JUDITH", "ANTHONY JUAN", "RAQUEL MARIA", "HERBERT ROLANDO", "SHEDY", "HERNAN BACILIO", "VICTOR MANUEL FULGENCIO", "FERNANDO", "REYNA ZOYLA", "RICARDO DIOGENES", "KAREN SHIRLEE", "LOURDES IRMA", "ALEX BRANDER", "CARLOS ERICK", "ROSEMERY", "CAROL JOANNE", "JORGE LUIS", "LUIS JOSE ELOY", "KARINA PAULA", "DIEGO MARTIN", "MIGUEL ANGEL", "BREISON ALONSO", "FELIX BENJAMIN", "MERLY"
+  /*names : string[] = ["LUIS EMILIO", "CARLOS WILFREDO", "LUIS JOSE", "MARGARITA", "ARMANDO", "PEDRO VIRGILIO", "FANNY", "JAVIER", "JORGE ALBERTO", "EDSON MIGUEL", "MILAGROS ANGELA", "JUAN MANUEL", "ELDER", "ADOLFO ROMEO", "ORLANDO", "JAQUELINE GENOVEVA", "ALCIDES", "JOSE MERCEDES", "EDWIN MARTIN", "LIZARDO", "JAVIER ESTEBAN", "ZOILA ELIZABETH", "ERADIO", "ROGELIO", "JAVIER GONZALO", "LUIS DANIEL", "HEVER CARLO", "FERNANDO DIEGO", "CARLOS MANUEL", "IGNACIO", "LUIS ALFREDO", "JULIAN", "SHERON FROYLANA", "SIMEON IGNACIO", "WILLIAM", "HERNAN ALEXANDER", "CARLOS JESUS", "ROSA MARIA", "ANDRES", "LUIS SILVANO", "CARLOS ALBERTO", "RAY BILLY", "LUIS ALFREDO ALBERTO", "KRIS MAYKOL", "SILVIA LUZ", "CARLOS RAUL", "JOSE CARLOS", "FELIX", "LUIS ENRIQUE", "ALFREDO FEDERICO", "JULIAN NESTOR", "JULIO CESAR", "LIDA RAQUEL", "MARITA MILAGROS", "MARIA DEL PILAR ELLA", "LIZANDRO", "JOHN JAVIER", "JAVIER ALEXANDER", "ALFONSO DANIEL", "LUZ ALEXI", "YURI LICINIO", "NANCY LINETH", "STEPHANIE VANESSA", "CHRISTHIAN", "EDWIN", "ALBERTO GENARO", "OSCAR SERGIO", "HUMBERTO", "GUISELA MARIA", "ANTHONY AQUILES", "JUAN", "MARCY KARIM", "BALTAZAR ELMER", "JORGE ENRIQUE", "LUIS ALBERTO", "GIANFRANCO CESAR ABEL", "JUANA JUDITH", "ANTHONY JUAN", "RAQUEL MARIA", "HERBERT ROLANDO", "SHEDY", "HERNAN BACILIO", "VICTOR MANUEL FULGENCIO", "FERNANDO", "REYNA ZOYLA", "RICARDO DIOGENES", "KAREN SHIRLEE", "LOURDES IRMA", "ALEX BRANDER", "CARLOS ERICK", "ROSEMERY", "CAROL JOANNE", "JORGE LUIS", "LUIS JOSE ELOY", "KARINA PAULA", "DIEGO MARTIN", "MIGUEL ANGEL", "BREISON ALONSO", "FELIX BENJAMIN", "MERLY"
   ];
 
   filteredNames : Observable<string[]>;
 
-  nameControl = new FormControl();
+  nameControl = new FormControl();*/
 
   // Constructor
 
-  constructor(private doctorService : DoctorsApiService, private builder: FormBuilder) {
+  constructor(private doctorService : DoctorsApiService, private builder: FormBuilder, private toastr : ToastrService) {
     super();
     this.detailData = {} as DoctorDetail;
     new MatTableDataSource<any>();
     this.filteredSurnames = of([]);
-    this.filteredNames = of([]);
   }
 
   ngOnInit(){
@@ -91,12 +91,6 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
         startWith(''),
         map(value => this._filterSurname(value))
       )
-
-    this.filteredNames = this.nameControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterName(value))
-      )
   }
 
   private _filterSurname(value : string): string[]{
@@ -105,11 +99,11 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
     return this.surnames.filter(surname => surname.toLowerCase().includes(filterValue));
   }
 
-  private _filterName(value : string): string[]{
-    const filterValue = value.toLowerCase();
-
-    return this.names.filter(name => name.toLowerCase().includes(filterValue));
-  }
+  // private _filterName(value : string): string[]{
+  //   const filterValue = value.toLowerCase();
+  //
+  //   return this.names.filter(name => name.toLowerCase().includes(filterValue));
+  // }
 
 
   ngAfterViewInit(){
@@ -119,7 +113,7 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
   // READ ACTIONS
 
   onRefresh(){
-    this.nameInput.nativeElement.value = '';
+    // this.nameInput.nativeElement.value = '';
     this.surnameInput.nativeElement.value = '';
     this.cmpInput.nativeElement.value = '';
   }
@@ -131,11 +125,15 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
 
     let cmp = this.cmpInput.nativeElement.value;
 
-    let name = this.nameInput.nativeElement.value;
+    // let name = this.nameInput.nativeElement.value;
 
     let surname = this.surnameInput.nativeElement.value;
 
-    if(cmp != '')
+    if(cmp == '' && surname == '')
+    {
+      this.toastr.info('Please complete the fields', 'INFO');
+    }
+    else if(cmp != '')
     {
       this.doctorService.getDoctorDetailsByCMP(cmp).subscribe((data : any)=>{
 
@@ -150,42 +148,15 @@ export class DoctorTableComponent extends BaseFormComponent implements OnInit, A
     }
     else
     {
-      if(name == '' && surname != '')
-      {
-        this.doctorService.getDoctorDetailsBySurname(surname).subscribe((data: any)=>{
-          this.dataSource = new MatTableDataSource<any>(data)
+      this.doctorService.getDoctorDetailsBySurname(surname).subscribe((data: any)=>{
+        this.dataSource = new MatTableDataSource<any>(data)
 
-          this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginator;
 
-          this.isLoading = false;
+        this.isLoading = false;
 
-          console.log(this.dataSource);
-        });
-      }
-      else if(name != '' && surname == '')
-      {
-        this.doctorService.getDoctorDetailsByName(name).subscribe((data : any)=>{
-          this.dataSource = new MatTableDataSource<any>(data)
-
-          this.dataSource.paginator = this.paginator;
-
-          this.isLoading = false;
-
-          console.log(this.dataSource)
-        })
-      }
-      else
-      {
-        this.doctorService.getDoctorDetailsByNameAndSurname(name, surname).subscribe((data : any)=>{
-          this.dataSource = new MatTableDataSource<any>(data)
-
-          this.dataSource.paginator = this.paginator;
-
-          this.isLoading = false;
-
-          console.log(this.dataSource)
-        });
-      }
+        console.log(this.dataSource);
+      });
     }
 
     this.submitted = true;

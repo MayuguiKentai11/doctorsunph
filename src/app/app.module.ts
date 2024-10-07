@@ -28,6 +28,8 @@ import {MatInput} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     DetailPageComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     BrowserModule,

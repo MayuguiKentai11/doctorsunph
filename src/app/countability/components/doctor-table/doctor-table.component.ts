@@ -16,7 +16,7 @@ import {map, Observable, of, startWith} from 'rxjs';
 export class DoctorTableComponent extends BaseFormComponent implements OnInit, AfterViewInit{
   // Attributes
 
-  displayedColumns : string[] = ['molecule', 'descriptionLaboratory', 'department', 'cmp', 'ytdSun23', 'ytdSun24', 'qtrSetNov', 'qtrDicFeb', 'qtrMarMay', 'qtrJunAgo'];
+  displayedColumns : string[] = ['molecule', 'descriptionLaboratory', 'department','speciality' ,'cmp', 'ytdSun23', 'ytdSun24', 'qtrDicFeb', 'qtrMarMay', 'qtrJunAgo'];
 
   dataSource! : MatTableDataSource<any>;
 

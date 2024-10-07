@@ -72,22 +72,27 @@
     </ng-container>-->
 
     <ng-container matColumnDef="molecule">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Molecule</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Molecule</th>
       <td *matCellDef="let element" mat-cell>{{ element.molecule }}</td>
     </ng-container>
 
     <ng-container matColumnDef="descriptionLaboratory">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Description Laboratory</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Description Laboratory</th>
       <td *matCellDef="let element" mat-cell>{{ element.descriptionLaboratory }}</td>
     </ng-container>
 
     <ng-container matColumnDef="department">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Department</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Department</th>
       <td *matCellDef="let element" mat-cell>{{ element.department }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="speciality">
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Speciality</th>
+      <td *matCellDef="let element" mat-cell>{{ element.speciality }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="cmp">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>CMP</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>CMP</th>
       <td *matCellDef="let element" mat-cell>{{ element.cmp }}</td>
     </ng-container>
 
@@ -102,32 +107,32 @@
     </ng-container>-->
 
     <ng-container matColumnDef="ytdSun23">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 23</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 23</th>
       <td *matCellDef="let element" mat-cell>{{ element.ytdSun23 }}</td>
     </ng-container>
 
     <ng-container matColumnDef="ytdSun24">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 24</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 24</th>
       <td *matCellDef="let element" mat-cell>{{ element.ytdSun24 }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="qtrSetNov">
+    <!--<ng-container matColumnDef="qtrSetNov">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR SET-NOV</th>
       <td *matCellDef="let element" mat-cell>{{ element.qtrSetNov }}</td>
-    </ng-container>
+    </ng-container>-->
 
     <ng-container matColumnDef="qtrDicFeb">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR DIC-FEB</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>QTR DIC-FEB</th>
       <td *matCellDef="let element" mat-cell>{{ element.qtrDicFeb }}</td>
     </ng-container>
 
     <ng-container matColumnDef="qtrMarMay">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR MAR-MAY</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>QTR MAR-MAY</th>
       <td *matCellDef="let element" mat-cell>{{ element.qtrMarMay }}</td>
     </ng-container>
 
     <ng-container matColumnDef="qtrJunAgo">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR JUN-AGO</th>
+      <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>QTR JUN-AGO</th>
       <td *matCellDef="let element" mat-cell>{{ element.qtrJunAgo }}</td>
     </ng-container>
 
@@ -142,6 +147,31 @@
 <style>
 
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+  .header-cell{
+    border: 2px solid #4a90e2;           /* A thicker border with a custom color */
+    border-radius: 4px 4px 0 0;          /* Rounded corners at the top */
+    padding: 12px 16px;                  /* Generous padding for more space */
+    background-color: #f0f8ff;           /* Soft background color */
+    color: #333;                         /* Dark text for contrast */
+    font-weight: bold;                   /* Bold text to stand out */
+    text-align: center;                  /* Center the text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.3s;   /* Smooth transition for hover effect */
+  }
+
+  .header-cell:hover{
+    background-color: #e1f5fe;
+  }
+
+  td{
+    border: 1px solid #4a90e2;             /* Soft border between rows */
+    background-color: #ffffff;                 /* White background for clean look */
+    color: #333;                               /* Dark text color for readability */
+    padding: 12px 16px;                        /* Padding to align with header */
+    transition: background-color 0.3s;         /* Smooth transition for hover effect */
+  }
+
 
   .overlay {
     display: flex;

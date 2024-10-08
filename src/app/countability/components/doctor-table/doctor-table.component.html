@@ -64,74 +64,54 @@
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
-    <!--<ng-container matColumnDef="id">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
-      <td *matCellDef="let element" mat-cell>{{ element.id }}</td>
-    </ng-container>-->
-
     <ng-container matColumnDef="molecule">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Molecule</th>
-      <td *matCellDef="let element" mat-cell>{{ element.molecule }}</td>
+      <td class="personal" *matCellDef="let element" mat-cell>{{ element.molecule }}</td>
     </ng-container>
 
     <ng-container matColumnDef="descriptionLaboratory">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Description Laboratory</th>
-      <td *matCellDef="let element" mat-cell>{{ element.descriptionLaboratory }}</td>
+      <td class="personal" *matCellDef="let element" mat-cell>{{ element.descriptionLaboratory }}</td>
     </ng-container>
 
     <ng-container matColumnDef="department">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Department</th>
-      <td *matCellDef="let element" mat-cell>{{ element.department }}</td>
+      <td class="personal" *matCellDef="let element" mat-cell>{{ element.department }}</td>
     </ng-container>
 
     <ng-container matColumnDef="speciality">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>Speciality</th>
-      <td *matCellDef="let element" mat-cell>{{ element.speciality }}</td>
+      <td class="personal" *matCellDef="let element" mat-cell>{{ element.speciality }}</td>
     </ng-container>
 
     <ng-container matColumnDef="cmp">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>CMP</th>
-      <td *matCellDef="let element" mat-cell>{{ element.cmp }}</td>
+      <td class="personal" *matCellDef="let element" mat-cell>{{ element.cmp }}</td>
     </ng-container>
-
-    <!--<ng-container matColumnDef="name">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Medic's name</th>
-      <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="surname">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Medic's surname</th>
-      <td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
-    </ng-container>-->
 
     <ng-container matColumnDef="ytdSun23">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 23</th>
-      <td *matCellDef="let element" mat-cell>{{ element.ytdSun23 }}</td>
+      <td class="ytd"*matCellDef="let element" mat-cell>{{ element.ytdSun23 }}</td>
     </ng-container>
 
     <ng-container matColumnDef="ytdSun24">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>YTD SUN 24</th>
-      <td *matCellDef="let element" mat-cell>{{ element.ytdSun24 }}</td>
+      <td class="ytd" *matCellDef="let element" mat-cell>{{ element.ytdSun24 }}</td>
     </ng-container>
-
-    <!--<ng-container matColumnDef="qtrSetNov">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>QTR SET-NOV</th>
-      <td *matCellDef="let element" mat-cell>{{ element.qtrSetNov }}</td>
-    </ng-container>-->
 
     <ng-container matColumnDef="qtrDicFeb">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>QTR DIC-FEB</th>
-      <td *matCellDef="let element" mat-cell>{{ element.qtrDicFeb }}</td>
+      <td class="qtr" *matCellDef="let element" mat-cell>{{ element.qtrDicFeb }}</td>
     </ng-container>
 
     <ng-container matColumnDef="qtrMarMay">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>QTR MAR-MAY</th>
-      <td *matCellDef="let element" mat-cell>{{ element.qtrMarMay }}</td>
+      <td class="qtr" *matCellDef="let element" mat-cell>{{ element.qtrMarMay }}</td>
     </ng-container>
 
     <ng-container matColumnDef="qtrJunAgo">
       <th class="header-cell" *matHeaderCellDef mat-header-cell mat-sort-header>QTR JUN-AGO</th>
-      <td *matCellDef="let element" mat-cell>{{ element.qtrJunAgo }}</td>
+      <td class="qtr" *matCellDef="let element" mat-cell>{{ element.qtrJunAgo }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -146,8 +126,21 @@
 
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
+  .qtr{
+    background-color: olivedrab;
+  }
+
+  .ytd{
+    background-color: goldenrod;
+  }
+
+  .personal{
+    background-color: antiquewhite;
+  }
+
+
   .header-cell{
-    border: 2px solid #4a90e2;           /* A thicker border with a custom color */
+    border: 2px solid #c8dbef;           /* A thicker border with a custom color */
     border-radius: 4px 4px 0 0;          /* Rounded corners at the top */
     padding: 12px 16px;                  /* Generous padding for more space */
     background-color: #f0f8ff;           /* Soft background color */
@@ -163,7 +156,7 @@
   }
 
   td{
-    border: 1px solid #4a90e2;             /* Soft border between rows */
+    border: 1px solid #2f3434;             /* Soft border between rows */
     background-color: #ffffff;                 /* White background for clean look */
     color: #333;                               /* Dark text color for readability */
     padding: 12px 16px;                        /* Padding to align with header */

@@ -27,7 +27,7 @@ export class DoctorsApiService {
   }
 
   getAllSurnames(){
-    return this.httpClient.get(`${this.baseUrl}`)
+    return this.httpClient.get(`${this.baseUrl}getallsurnames`)
   }
 
 }
